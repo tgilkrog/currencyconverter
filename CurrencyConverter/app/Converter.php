@@ -31,17 +31,17 @@ class Converter
             return $amount;
         }
         
-        //Er value nul så retuner 0
+        //Er amount nul så retuner 0
         if ($amount == 0) {
             return 0;
         }
         
-        //Hvis fra er EUR skal der bare ganges
+        //Hvis $from er EUR skal der bare ganges
         if ($from == 'EUR') {
             return $this->currencies[$to] * $amount;
         }
 
-        //Er det til euro skal der divideres        
+        //Er $to euro skal der divideres        
         if ($to == 'EUR') {
             return $amount / $this->currencies[$from];
         }
