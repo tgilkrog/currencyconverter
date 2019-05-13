@@ -37,25 +37,9 @@
         </style>
     </head>
     <body>
-        <h1>{{$title}}</h1>
-        <?php
-            use App\Converter;
-
-            $url = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-            $converter = new \App\Converter(file_get_contents($url));
-        ?>
-
-        <?php
-            if( isset($_GET['submit']) ){
-                $amount = htmlentities($_GET['amount']);
-                $from = htmlentities($_GET['from']);
-                $to = htmlentities($_GET['to']);
-
-                $result = $converter->convert($amount, $from, $to);
-            }
-        ?>
-
-        <form action="" method="get">
+        <h1>Currency Converter</h1>
+        <form action="/" method="post">
+            {{ csrf_field()}}
             <h3>Indsæt tal:  <input type="text" name="amount" id="amount"></h3>
             <br />
             <h3>FRA:  
@@ -89,14 +73,12 @@
             </select>
             </h3>
             <br />
-            <input type="submit" name="submit" value="Find Valuta" />
+            <input type="submit" name="button" value="Find Valuta" />
         </form>
 
         <h2>
             <br />
-            <?php 
-                if(isset($result)) echo $result;  
-            ?>
+            <h1>{{$result}}</h1>
         </h2>
     </body>
 </html>

@@ -6,9 +6,10 @@ class Converter
 {
     private $currencies = array();
     
-    public function __construct($url)
+    public function __construct()
     {
-        $root = simplexml_load_string($url);
+        $url = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+        $root = simplexml_load_string(file_get_contents($url));
 
         if (!$root) {
             throw new \RuntimeException("Opstod en bette fejl");
@@ -17,6 +18,10 @@ class Converter
         foreach ($root->Cube->Cube->Cube as $node) {
             $this->currencies[(string)$node['currency']] = (string)$node['rate'];
         }
+    }
+
+    public function getDat(){
+        return $this->currencies;
     }
 
     public function convert($amount, $from, $to)
@@ -40,12 +45,9 @@ class Converter
         if ($to == 'EUR') {
             return $amount / $this->currencies[$from];
         }
-        
-        //Er ingen af dem EUR skal vi finde ud af hvad $from er i EUR
-        $amountInEur = $this->convert($amount, $from, 'EUR');
-        
-        //Herefter køre vi metoden igen med den nye amount
-        return $this->convert($amountInEur, 'EUR', $to);
+
+        //Er ingen af af dem EUR divideres de to currencies og derefter ganged med amount
+        return $amount * ($this->currencies[$to] / $this->currencies[$from]);
     }   
 }
 ?>
