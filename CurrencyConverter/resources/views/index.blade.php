@@ -72,6 +72,7 @@
                 <option value="SEK">SEK</option>
             </select>
             </h3>
+   
             <br />
             <input type="submit" name="button" value="Find Valuta" />
         </form>

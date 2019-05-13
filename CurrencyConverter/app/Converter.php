@@ -20,13 +20,9 @@ class Converter
         }
     }
 
-    public function getDat(){
-        return $this->currencies;
-    }
-
     public function convert($amount, $from, $to)
     {  
-        //Er den det samme så bare returner      
+        //Er den det samme, så bare returner      
         if ($from == $to) {
             return $amount;
         }
