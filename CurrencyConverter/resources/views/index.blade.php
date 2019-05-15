@@ -43,43 +43,31 @@
             <h3>Indsæt tal:  <input type="text" name="amount" id="amount"></h3>
             <br />
             <h3>FRA:  
-            <select name="from">
-                <option value="USD">USD</option>
-                <option value="JPY">JPY</option>
-                <option value="BGN">BGN</option>
-                <option value="CZK">CZK</option>
-                <option value="DKK">DKK</option>
-                <option value="GBP">GBP</option>
-                <option value="HUF">HUF</option>
-                <option value="PLN">PLN</option>
-                <option value="RON">RON</option>
-                <option value="SEK">SEK</option>
-                <option value="EUR">EUR</option>
-            </select>
+                <select name="from">
+                    <option value="EUR">EUR</option>
+                    <?php
+                        foreach($list as $key => $value):
+                        echo '<option value="'.$key.'">'.$key.'</option>';
+                        endforeach;
+                    ?>
+                </select>
             </h3>
             <h3>Til: 
-            <select name="to">
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
-                <option value="JPY">JPY</option>
-                <option value="BGN">BGN</option>
-                <option value="CZK">CZK</option>
-                <option value="DKK">DKK</option>
-                <option value="GBP">GBP</option>
-                <option value="HUF">HUF</option>
-                <option value="PLN">PLN</option>
-                <option value="RON">RON</option>
-                <option value="SEK">SEK</option>
-            </select>
+                <select name="to">
+                    <?php
+                        foreach($list as $key => $value):
+                        echo '<option value="'.$key.'">'.$key.'</option>';
+                        endforeach;
+                    ?>
+                    <option value="EUR">EUR</option>
+                </select>
             </h3>
-   
             <br />
             <input type="submit" name="button" value="Find Valuta" />
         </form>
-
         <h2>
             <br />
-            <h1>{{$result}}</h1>
+            {{$result}}
         </h2>
     </body>
 </html>

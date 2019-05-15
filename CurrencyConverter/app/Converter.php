@@ -9,7 +9,8 @@ class Converter
     public function __construct()
     {
         $url = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-        $root = simplexml_load_string(file_get_contents($url));
+        //$root = simplexml_load_string(file_get_contents($url));
+        $root = $this->get_xml($url, 1000);
 
         if (!$root) {
             throw new \RuntimeException("Opstod en bette fejl");
@@ -18,6 +19,26 @@ class Converter
         foreach ($root->Cube->Cube->Cube as $node) {
             $this->currencies[(string)$node['currency']] = (string)$node['rate'];
         }
+    }
+
+    function get_xml($url, $max_age)
+    {
+        $file = '../public/XML/' . md5($url);
+    
+        if (file_exists($file)
+         && filemtime($file) >= time() - $max_age)
+        {
+            // the cache file exists and is fresh enough
+            return simplexml_load_file($file);
+        }
+    
+        $xml = file_get_contents($url);
+        file_put_contents($file, $xml);
+        return simplexml_load_string($xml);
+    }
+
+    public function getList(){
+        return $this->currencies;
     }
 
     public function convert($amount, $from, $to)
